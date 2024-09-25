@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18Comic PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #content {
+            text-align: center;
+        }
+        #redirectButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+        }
+        #loadingAnimation {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1>18Comic PWA</h1>
+        <div id="loadingAnimation"></div>
+        <button id="redirectButton">Go to 18Comic</button>
+    </div>
+
+    <script>
+        function redirect() {
+            window.location.href = 'https://18comic.vip/';
+        }
+
+        // 检查是否为独立应用
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            // 如果是 app 模式，等待很短的时间后重定向
+            setTimeout(redirect, 1000);
+        } else {
+            // 如果不是 app 模式，隐藏加载动画，显示按钮
+            document.getElementById('loadingAnimation').style.display = 'none';
+            document.getElementById('redirectButton').style.display = 'inline-block';
+            document.getElementById('redirectButton').addEventListener('click', redirect);
+        }
+
+        // 注册 Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then((reg) => console.log('Service worker registered.', reg))
+                .catch((err) => console.log('Service worker registration failed.', err));
+        }
+    </script>
+</body>
+</html>
