@@ -1,6 +1,6 @@
 {
-    "name": "18Comic PWA",
-    "short_name": "18Comic",
+    "name": "JmComic PWA",
+    "short_name": "JmComic",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#ffffff",
